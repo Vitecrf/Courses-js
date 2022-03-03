@@ -41,4 +41,7 @@ export default class College {
         console.log(typeof (message))
         return message;
     }
+    getAllCourses(){
+        return this.#courses.get();
+    }
 }

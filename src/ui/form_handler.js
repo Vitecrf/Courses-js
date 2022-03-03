@@ -35,4 +35,18 @@ export default class FormHandler {
             }
         })
     }
+
+    fillOptions(idOptions, options){
+        document.getElementById(idOptions).innerHTML = `${getOptions(options)}`
+    }
+    show(){
+        this.#formElement.hidden = false;
+    }
+    hide(){
+        this.#formElement.hidden = true;
+    }
 }
+    function getOptions(options){
+    return options.map(o => `<option value="${o}">${o}</option>`).join('');
+    }
+
