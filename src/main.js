@@ -5,6 +5,7 @@ import College from "../services/college";
 import Courses from "../services/courses";
 import FormHandler from "./ui/form_handler";
 import TableHandler from "./ui/table_handler";
+import _ from 'lodash';
 
 //контролер
 const N_COURSES = 10;
@@ -35,7 +36,7 @@ const tableHandler = new TableHandler([
     {key: 'lecturer', displayName: 'Lecturer Name'},
     {key: 'cost', displayName: 'Cost (ILS)'},
     {key: 'hours', displayName: 'Course Duration (h)'},
-], "courses-table");
+], "courses-table", "sortCourses");
 const formHandler = new FormHandler("courses-form", "alert");
 formHandler.addHandler(course => {
     const message = dataProcessor.addCourse(course);
@@ -46,7 +47,17 @@ formHandler.addHandler(course => {
         return "";
     }
     return message;
-})
+});
+
+//==================================
+const tableHoursStatistics = new TableHandler([
+    {key: 'minInterval', displayName: 'min' },
+    {key: 'maxInterval', displayName: 'max' },
+    {key: 'amount', displayName: 'amount' },
+], "courses-table", "sortCourses");
+
+
+
 
 formHandler.fillOptions("course-name-options", courseData.courses);
 formHandler.fillOptions("lecturer-options", courseData.lectors);
@@ -56,8 +67,21 @@ window.showForm = () =>{
     formHandler.show();
     tableHandler.hideTable();
 }
-
 window.showCourses = () =>{
+    formHandler.removeMessage();
     tableHandler.showTable(dataProcessor.getAllCourses());
+    formHandler.hide();
+}
+window.sortCourses = (key) =>{
+    tableHandler.showTable(dataProcessor.sortCourses(key));
+}
+window.showHoursStatistics = (hours) =>{
+    formHandler.removeMessage();
+    tableHoursStatistics.showTable(dataProcessor.getStatistics(hours, courseData.intervalHours));
+    formHandler.hide();
+}
+window.showCostStatistics = (cost) => {
+    formHandler.removeMessage();
+    tableHoursStatistics.showTable(dataProcessor.getStatistics(cost, courseData.intervalCost));
     formHandler.hide();
 }

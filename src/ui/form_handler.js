@@ -45,6 +45,9 @@ export default class FormHandler {
     hide(){
         this.#formElement.hidden = true;
     }
+    removeMessage(){
+        this.#alertElement.innerHTML = '';
+    }
 }
     function getOptions(options){
     return options.map(o => `<option value="${o}">${o}</option>`).join('');
