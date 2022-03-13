@@ -4,6 +4,11 @@ import {getRandomElement} from "./utils/random";
 import College from "../services/college";
 import Courses from "../services/courses";
 import FormHandler from "./ui/form_handler";
+import TableHandler from "./ui/table_handler";
+import _ from 'lodash';
+import RandomCours from "./ui/randomCours";
+
+//контролер
 const N_COURSES = 10;
 function createCourses() {
     const courses = [];
@@ -23,9 +28,17 @@ const ulElem = document.getElementById('courses');
 //TODO rendering inside <ul>
 const courses = createCourses();
 // ulElem.innerHTML = `${getCourseItems(createCourses())}`;
-ulElem.innerHTML = `${getCourseItems(courses)}`
+// ulElem.innerHTML = `${getCourseItems(courses)}`
+const elementRandom = new RandomCours('randomCourses');
 const dataProvider = new Courses(courseData.minId, courseData.maxId, courses);
 const dataProcessor = new College(dataProvider, courseData);
+const tableHandler = new TableHandler([
+    {key: 'id', displayName: 'ID'},
+    {key: 'name', displayName: 'Course Name'},
+    {key: 'lecturer', displayName: 'Lecturer Name'},
+    {key: 'cost', displayName: 'Cost (ILS)'},
+    {key: 'hours', displayName: 'Course Duration (h)'},
+], "courses-table", "sortCourses", "removeCourse");
 const formHandler = new FormHandler("courses-form", "alert");
 formHandler.addHandler(course => {
     const message = dataProcessor.addCourse(course);
@@ -36,5 +49,57 @@ formHandler.addHandler(course => {
         return "";
     }
     return message;
-})
+});
+
+//==================================
+const tableHoursStatistics = new TableHandler([
+    {key: 'minInterval', displayName: 'min' },
+    {key: 'maxInterval', displayName: 'max' },
+    {key: 'amount', displayName: 'amount' },
+], "courses-table", "sortCourses");
+
+
+
+
+formHandler.fillOptions("course-name-options", courseData.courses);
+formHandler.fillOptions("lecturer-options", courseData.lectors);
+// tableHandler.showTable(courses);
+
+window.showForm = () =>{
+    formHandler.show();
+    tableHandler.hideTable();
+    elementRandom.hide();
+}
+window.showCourses = () =>{
+    formHandler.removeMessage();
+    tableHandler.showTable(dataProcessor.getAllCourses());
+    formHandler.hide();
+    elementRandom.hide();
+}
+window.sortCourses = (key) =>{
+    tableHandler.showTable(dataProcessor.sortCourses(key));
+}
+window.showHoursStatistics = (hours) =>{
+    formHandler.removeMessage();
+    tableHoursStatistics.showTable(dataProcessor.getStatistics(hours, courseData.intervalHours));
+    formHandler.hide();
+    elementRandom.hide();
+}
+window.showCostStatistics = (cost) => {
+    formHandler.removeMessage();
+    tableHoursStatistics.showTable(dataProcessor.getStatistics(cost, courseData.intervalCost));
+    formHandler.hide();
+    elementRandom.hide();
+}
+window.removeCourse = (id) =>{
+    dataProcessor.removeCourse(+id);
+    tableHandler.showTable(dataProcessor.getAllCourses());
+}
+window.randomCours = () =>{
+    formHandler.removeMessage();
+    formHandler.hide();
+    tableHandler.hideTable();
+    elementRandom.generetElement();
+    elementRandom.show();
+}
 

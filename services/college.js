@@ -37,8 +37,27 @@ export default class College {
         message += !courses.includes(name) ? `wrong course name - should be one from ${courses}`:'';
         const year = openingDate.getFullYear();
         message += year < minYear || year > maxYear ?
-            `wrong opening date - year should be in range [${minYear} - ${maxYear}]` : ''
+            `wrong opening date - year should be in range [${minYear} - ${maxYear}]` : '';
         console.log(typeof (message))
         return message;
+    }
+    getAllCourses(){
+        return this.#courses.get();
+    }
+    sortCourses(key){
+        return _.sortBy(this.getAllCourses(), key);
+    }
+    getStatistics(key, lengthInterval){
+        const statsRes = _.countBy(this.getAllCourses(), (course) => Math.floor(course[key]/lengthInterval));
+        return Object.entries(statsRes).map(e => ({minInterval : e[0]*lengthInterval,
+            maxInterval : (e[0]*lengthInterval) + (lengthInterval-1),
+            amount : e[1]}), {});
+    }
+
+    removeCourse(id){
+        if(!this.#courses.exists(id)){
+            throw `course with id ${id} not found`
+        }
+        return this.#courses.remove(id);
     }
 }
