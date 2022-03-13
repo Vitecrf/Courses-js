@@ -30,4 +30,13 @@ export default class Courses {
         //TODO checks if a course with the given id exists
         return !!this.#courses.find(i => i.id === id);
     }
+    get(){
+        return this.#courses;
+    }
+    remove(id){
+        const index = this.#courses.findIndex(c => c.id == id);
+        const res = this.#courses[index];
+        this.#courses.splice(index, 1);
+        return res;
+    }
 }
