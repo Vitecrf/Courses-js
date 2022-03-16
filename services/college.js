@@ -8,7 +8,7 @@ export default class College {
         this.#courseData = courseData;
     }
 
-    addCourse(course) {
+    async addCourse(course) {
         //TODO validation of the course data
         //if course is valid, then course should be added : this.#courses.add(course)
         //if course is invalid, then the method returns full message describing what's wrong
@@ -18,7 +18,7 @@ export default class College {
        course.openingDate = new Date(course.openingDate);       //получаем дату
        const validationMessage = this.#getValidationMessage(course);
        if(!validationMessage){
-           this.#courses.add(course);
+           return await this.#courses.add(course);
        }
        return validationMessage;
     }
@@ -38,26 +38,26 @@ export default class College {
         const year = openingDate.getFullYear();
         message += year < minYear || year > maxYear ?
             `wrong opening date - year should be in range [${minYear} - ${maxYear}]` : '';
-        console.log(typeof (message))
+        // console.log(typeof (message))
         return message;
     }
-    getAllCourses(){
-        return this.#courses.get();
+    async getAllCourses(){
+        return await this.#courses.get();
     }
-    sortCourses(key){
-        return _.sortBy(this.getAllCourses(), key);
+    async sortCourses(key){
+        return  _.sortBy(await this.getAllCourses(), key);
     }
-    getStatistics(key, lengthInterval){
-        const statsRes = _.countBy(this.getAllCourses(), (course) => Math.floor(course[key]/lengthInterval));
+    async getStatistics(key, lengthInterval){
+        const statsRes =  _.countBy(await this.getAllCourses(), (course) => Math.floor(course[key]/lengthInterval));
         return Object.entries(statsRes).map(e => ({minInterval : e[0]*lengthInterval,
             maxInterval : (e[0]*lengthInterval) + (lengthInterval-1),
             amount : e[1]}), {});
     }
 
-    removeCourse(id){
-        if(!this.#courses.exists(id)){
+    async removeCourse(id){
+        if(!await this.#courses.exists(id)){
             throw `course with id ${id} not found`
         }
-        return this.#courses.remove(id);
+        return await this.#courses.remove(id);
     }
 }
