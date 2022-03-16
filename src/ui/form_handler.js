@@ -10,7 +10,7 @@ export default class FormHandler {
     }
 
     addHandler(fnProcessor) {
-        this.#formElement.addEventListener('submit', event => {
+        this.#formElement.addEventListener('submit', async event => {
             event.preventDefault();
             const data = Array.from(this.#inputElements)
                 .reduce((obj, element) => {
@@ -18,7 +18,7 @@ export default class FormHandler {
                     return obj;
                 }, {})
 
-            const message = fnProcessor(data);
+            const message = await fnProcessor(data);
             if (!message) {
                 this.#formElement.reset(); //everything ok
                 this.#alertElement.innerHTML = '';
@@ -35,4 +35,21 @@ export default class FormHandler {
             }
         })
     }
+
+    fillOptions(idOptions, options){
+        document.getElementById(idOptions).innerHTML += `${getOptions(options)}`
+    }
+    show(){
+        this.#formElement.hidden = false;
+    }
+    hide(){
+        this.#formElement.hidden = true;
+    }
+    removeMessage(){
+        this.#alertElement.innerHTML = '';
+    }
 }
+    function getOptions(options){
+    return options.map(o => `<option value="${o}">${o}</option>`).join('');
+    }
+
