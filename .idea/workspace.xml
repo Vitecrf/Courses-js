@@ -5,14 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="122a5b6d-9106-4083-9a2a-1980e04d88d2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/college.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/college.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/courses.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/courses.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/form_handler.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/form_handler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/randomCours.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/table_handler.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/table_handler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/random.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/random.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +44,16 @@
     <property name="settings.editor.selected.configurable" value="MTConfigurable" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
+  <component name="RunManager">
+    <configuration name="test.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/services/test.js" working-dir="$PROJECT_DIR$/services">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.test.js" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -56,7 +63,8 @@
       <option name="presentableId" value="Default" />
       <updated>1647252539541</updated>
       <workItem from="1647252541289" duration="7682000" />
-      <workItem from="1647425409583" duration="7944000" />
+      <workItem from="1647425409583" duration="18985000" />
+      <workItem from="1647520514912" duration="10128000" />
     </task>
     <servers />
   </component>

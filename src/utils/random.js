@@ -16,6 +16,6 @@ export function getRandomDate(minYear, maxYear) {
     const day = getRandomNumber(1, 31);
     const month = getRandomNumber(0, 11);
     const year = getRandomNumber(minYear, maxYear);
-    const date = new Date(year, month, day).toLocaleDateString();
+    const date = new Date(year, month, day);
     return date;
 }

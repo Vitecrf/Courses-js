@@ -2,16 +2,16 @@ import courseData from './config/courseData.json'
 import { getRandomCourse } from './utils/randomCourse';
 import {getRandomElement} from "./utils/random";
 import College from "../services/college";
-import Courses from "../services/courses";
+import {dataProvider} from "./config/services-config";
 import FormHandler from "./ui/form_handler";
 import TableHandler from "./ui/table_handler";
 import _ from 'lodash';
 import NavigatorButtons from "./ui/navigator_buttons";
 import Spinner from "./ui/spinner";
-
+import Alert from "./ui/alert";
 
 //контролер
-const N_COURSES = 10;
+const N_COURSES = 0;
 function createCourses() {
     const courses = [];
     for (let i = 0; i < N_COURSES; i++) {
@@ -32,7 +32,7 @@ const courses = createCourses();
 // ulElem.innerHTML = `${getCourseItems(createCourses())}`;
 // ulElem.innerHTML = `${getCourseItems(courses)}`
 
-const dataProvider = new Courses(courseData.minId, courseData.maxId, courses);
+
 const dataProcessor = new College(dataProvider, courseData);
 const tableHandler = new TableHandler([
     {key: 'id', displayName: 'ID'},
@@ -40,6 +40,7 @@ const tableHandler = new TableHandler([
     {key: 'lecturer', displayName: 'Lecturer Name'},
     {key: 'cost', displayName: 'Cost (ILS)'},
     {key: 'hours', displayName: 'Course Duration (h)'},
+    {key: 'openingDate', displayName: 'Date'}
 ], "courses-table", "sortCourses", "removeCourse");
 const formHandler = new FormHandler("courses-form", "alert");
 formHandler.addHandler(async course => {
@@ -79,16 +80,30 @@ generationHandler.addHandler(async generation => {
     return '';
 })
 const spinner = new Spinner("spinner");
-
+const alertMs = new Alert("alert");
 formHandler.fillOptions("course-name-options", courseData.courses);
 formHandler.fillOptions("lecturer-options", courseData.lectors);
 // tableHandler.showTable(courses);
 
 async function asyncRequestWithSpinner(asyncFn){
     spinner.start();
-    const res = await asyncFn();
-    spinner.stop();
-    return res;
+    try {
+
+        const res = await asyncFn();
+
+        return res;
+    }catch (e){
+        console.log(e.name);                // "URIError"
+        console.log(e.fileName);            // "Scratchpad/1"
+        console.log(e.lineNumber);          // 2
+        console.log(e.columnNumber);        // 2
+        console.log(e.stack);
+        // console.log(err.stack)
+        // alertMs.showAlert(err.url);
+    }finally {
+        spinner.stop();
+    }
+
 }
 
 function hide(){

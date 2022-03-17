@@ -36,7 +36,7 @@ export default class Courses {
 
     exists(id){
         //TODO checks if a course with the given id exists
-        return !!this.#courses.find(i => i.id === id);
+        return getPromise(100, !!this.#courses.find(i => i.id === id));
     }
     get(){
         return getPromise(2000, this.#courses);

@@ -16,8 +16,10 @@ export default class College {
        course.hours = +course.hours;
        course.cost = +course.cost;
        course.openingDate = new Date(course.openingDate);       //получаем дату
+        // course.openingDate = course.;
        const validationMessage = this.#getValidationMessage(course);
        if(!validationMessage){
+           // course.openingDate = course.openingDate.toLocaleDateString();
            return await this.#courses.add(course);
        }
        return validationMessage;
